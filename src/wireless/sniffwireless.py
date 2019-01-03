@@ -10,10 +10,10 @@
                 PrismHeader
                 RadioTap
                 PPI
-                    Dot11QoS
-                        LLC
                     Dot11
-                        LLC
+                        Dot11QoS - [DATA]
+                            LLC
+                        Dot11WEP - [DATA]
                         Dot11AssoReq
                             Dot11Elt
                         Dot11AssoResp
@@ -33,24 +33,26 @@
                         Dot11Auth
                             Dot11Elt
                         Dot11Deauth
-                        Dot11Ack
-                        Dot11Elt
-                            Dot11Elt
+                        Dot11Ack - [CONTROL]
 '''
 
-from scapy.layers.dot11 import *
+
+from scapy.layers.dot11 import Dot11, Dot11ProbeResp, LLC
+from scapy.sendrecv import sniff
 
 
 def callback(packet):
     # print(packet.show())
-    # if packet.haslayer(Dot11):
-    #     frameType = packet.sprintf("%Dot11.type%")
-    #     typeNum = packet.sprintf("%type%")
-    #     if "Data" in frameType:
-    #         print(packet.summary())
-    if Dot11 in packet:
-        if Dot11ProbeResp in packet:
-            packet.show()
+    if packet.haslayer(Dot11):
+        frameType = packet.sprintf("%Dot11.type%")
+        # typeNum = packet.sprintf("%type%")
+        if "Data" in frameType:
+            print(packet.show())
 
+    # if Dot11 in packet:
+    #     if Dot11ProbeResp in packet:
+    #         packet.show()
+
+    
 
 sniff(prn=callback, iface="wlan0mon")
