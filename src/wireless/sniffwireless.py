@@ -43,6 +43,7 @@ from scapy.sendrecv import sniff
 
 def callback(packet):
     # print(packet.show())
+    # print(packet.summary())
     if packet.haslayer(Dot11):
         frameType = packet.sprintf("%Dot11.type%")
         # typeNum = packet.sprintf("%type%")
