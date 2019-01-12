@@ -36,7 +36,7 @@
                         Dot11Ack - [CONTROL]
 '''
 
-
+import os
 from scapy.layers.dot11 import Dot11, Dot11ProbeResp, LLC
 from scapy.sendrecv import sniff
 
@@ -45,15 +45,16 @@ def callback(packet):
     # print(packet.show())
     # print(packet.summary())
     if packet.haslayer(Dot11):
-        frameType = packet.sprintf("%Dot11.type%")
+        # frameType = packet.sprintf("%Dot11.type%")
         # typeNum = packet.sprintf("%type%")
-        if "Data" in frameType:
-            print(packet.show())
+        # if "Data" in frameType:
+        #     print(packet.show())
 
-    # if Dot11 in packet:
-    #     if Dot11ProbeResp in packet:
-    #         packet.show()
+        if packet.addr2 == "00:c0:ca:7e:a6:42":
+            print(packet.summary())
 
-    
+iface = "kismon0"
+channel = 1
 
-sniff(prn=callback, iface="wlan0mon")
+os.system("iwconfig " + iface + " channel " + str(channel))
+sniff(prn=callback, iface=iface)
