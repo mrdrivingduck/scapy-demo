@@ -11,6 +11,7 @@
         If the network is down after using 'airmon-ng', use 'kismet' instead.
 '''
 
+import os
 from scapy.layers.dot11 import Dot11, Dot11Elt, Dot11Beacon, RadioTap
 from scapy.sendrecv import send, sendp
 
@@ -25,4 +26,8 @@ dot11.addr3 = "00:c0:ca:7e:a6:42"
 frame = RadioTap() / dot11
 print(frame.summary())
 
-sendp(frame, iface="kismon0", inter=0.1, loop=1)
+iface = "kismon0"
+channel = 1
+
+os.system("iwconfig " + iface + " channel " + str(channel))
+sendp(frame, iface=iface, inter=0.1, loop=1, count=1)
