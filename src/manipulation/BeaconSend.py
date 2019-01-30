@@ -12,7 +12,7 @@ elt.ID = 0
 elt.info = SSID
 elt.len = len(SSID)
 
-beacon = Dot11Beacon(cap="ESS+privacy")
+beacon = Dot11Beacon(cap="ESS+privacy", timestamp=100000000, beacon_interval=10000)
 
 dot11 = Dot11()
 dot11.type = 0
@@ -24,7 +24,7 @@ dot11.addr3 = "ba:09:87:65:43:21"  # sender
 
 # Constructing packet
 frame = RadioTap() / dot11 / beacon / elt
-print(frame.summary())
+print(frame.show())
 
 iface = "kismon1"
 channel = 1

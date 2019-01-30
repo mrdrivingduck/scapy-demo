@@ -3,7 +3,7 @@
 
 
 import os
-from scapy.layers.dot11 import Dot11, Dot11ProbeResp, Dot11Elt
+from scapy.layers.dot11 import Dot11, Dot11ProbeResp, Dot11Elt, Dot11Beacon
 from scapy.sendrecv import sniff
 
 def callback(packet):
