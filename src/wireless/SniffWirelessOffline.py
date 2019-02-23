@@ -31,5 +31,5 @@ iface = "kismon0"
 # channel = 1
 
 # os.system("iwconfig " + iface + " channel " + str(channel))
-sniff(iface=iface, timeout=20)
+sniff(prn=callback, iface=iface, timeout=20)
 wrpcap("data/temp.pcap", pkts)
