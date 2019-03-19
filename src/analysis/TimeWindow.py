@@ -1,6 +1,6 @@
 '''
     @author Mr Dk.
-    @version 2019.3.18
+    @version 2019.3.19
     @function
         Use 'rdpcap()' to read packet file captured by Wireshark
         Use 'pkt.time' to get packet receiving time in ms
@@ -11,15 +11,24 @@
 from scapy.utils import rdpcap
 from scapy.layers.dot11 import RadioTap
 
-window = 100
+all_packets = rdpcap('data/evil-twin-20190318-part8.pcapng')
+client_packets = []
+ap_packets = []
 
-client_packets = rdpcap('data/client-20190317.pcapng')
-ap_packets = rdpcap('data/ap-20190317.pcapng')
-# client_packets = rdpcap('data/ap-20190317.pcapng')
-# ap_packets = rdpcap('data/client-20190317.pcapng')
+for i in range(0, len(all_packets)):
+    if 'c6:9d:ed:9f:8d:d8' in all_packets[i].addr1:
+        client_packets.append(all_packets[i])
+    else:
+        ap_packets.append(all_packets[i])
+    # if 'c6:9d:ed:9f:8d:d8' in all_packets[i].addr1:
+    #     ap_packets.append(all_packets[i])
+    # else:
+    #     client_packets.append(all_packets[i])
 
 client_packets_count = len(client_packets)
 ap_packets_count = len(ap_packets)
+
+window = 200
 
 hit = 0
 
